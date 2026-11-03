@@ -1,8 +1,8 @@
 package fr.theoszanto.voxatile.vox;
 
-import com.ignfab.minalac.generator.parameters.OutputFormat;
-import com.ignfab.minalac.generator.parameters.ParamsParser;
-import com.ignfab.minalac.generator.utils.modules.Module;
+import fr.ign.voxatile.core.parameters.OutputFormat;
+import fr.ign.voxatile.core.parameters.ParamsParser;
+import fr.ign.voxatile.core.utils.modules.Module;
 
 /**
  * Vox format (MagicaVoxel) module.

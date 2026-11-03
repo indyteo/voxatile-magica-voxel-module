@@ -1,13 +1,13 @@
 package fr.theoszanto.voxatile.vox;
 
-import com.ignfab.minalac.generator.utils.FileHelpers;
-import com.ignfab.minalac.generator.utils.world2d.WorldBBox2d;
-import com.ignfab.minalac.generator.utils.world3d.WorldBBox3d;
-import com.ignfab.minalac.generator.utils.world3d.WorldCoords3d;
-import com.ignfab.minalac.generator.world.MapWriteException;
-import com.ignfab.minalac.generator.world.VoxelTile;
-import com.ignfab.minalac.generator.world.VoxelWorld;
-import com.ignfab.minalac.generator.world.VoxelWorldMetadata;
+import fr.ign.voxatile.core.utils.FileHelpers;
+import fr.ign.voxatile.core.utils.world2d.WorldBBox2d;
+import fr.ign.voxatile.core.utils.world3d.WorldBBox3d;
+import fr.ign.voxatile.core.utils.world3d.WorldCoords3d;
+import fr.ign.voxatile.core.world.MapWriteException;
+import fr.ign.voxatile.core.world.VoxelTile;
+import fr.ign.voxatile.core.world.VoxelWorld;
+import fr.ign.voxatile.core.world.VoxelWorldMetadata;
 
 import java.io.File;
 import java.util.Collection;

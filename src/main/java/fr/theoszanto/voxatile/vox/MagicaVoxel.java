@@ -1,7 +1,7 @@
 package fr.theoszanto.voxatile.vox;
 
-import com.ignfab.minalac.generator.placeables.Placeable;
-import com.ignfab.minalac.generator.world.VoxelTile;
+import fr.ign.voxatile.core.placeables.Placeable;
+import fr.ign.voxatile.core.world.VoxelTile;
 
 public record MagicaVoxel(int rgba) implements Placeable {
 	public static final MagicaVoxel DEFAULT_VOXEL = new MagicaVoxel(0);

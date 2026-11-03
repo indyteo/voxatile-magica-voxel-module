@@ -1,8 +1,8 @@
 package fr.theoszanto.voxatile.vox;
 
-import com.ignfab.minalac.generator.utils.world3d.WorldBBox3d;
-import com.ignfab.minalac.generator.world.MapWriteException;
-import com.ignfab.minalac.generator.world.VoxelTile;
+import fr.ign.voxatile.core.utils.world3d.WorldBBox3d;
+import fr.ign.voxatile.core.world.MapWriteException;
+import fr.ign.voxatile.core.world.VoxelTile;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntMaps;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;

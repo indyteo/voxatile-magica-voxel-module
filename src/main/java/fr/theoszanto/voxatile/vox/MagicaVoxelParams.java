@@ -2,8 +2,8 @@ package fr.theoszanto.voxatile.vox;
 
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
-import com.ignfab.minalac.generator.parameters.placeables.PlaceableParams;
-import com.ignfab.minalac.generator.utils.random.Seed;
+import fr.ign.voxatile.core.parameters.placeables.PlaceableParams;
+import fr.ign.voxatile.core.utils.random.Seed;
 
 import java.beans.ConstructorProperties;
 
