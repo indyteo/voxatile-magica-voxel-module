@@ -14,10 +14,17 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * MagicaVoxel output implementation.
+ * Note that the format used (.vox file version 150) does not support
+ * tiling, so this implementation creates a standalone .vox file.
+ */
 public class MagicaVoxelTile extends VoxelTile {
 	private final File voxFile;
 	private final byte[] data = new byte[256 * 256 * 256];
 	private final Palette palette = new Palette();
+
+	// Bounds are updated when voxels are placed to trim and center resulting model
 	private int minX = Integer.MAX_VALUE;
 	private int minY = Integer.MAX_VALUE;
 	private int minZ = Integer.MAX_VALUE;
@@ -26,8 +33,15 @@ public class MagicaVoxelTile extends VoxelTile {
 	private int maxZ = Integer.MIN_VALUE;
 	private int nVoxels = 0;
 
+	// Placeholder ID to mark empty voxels (real color IDs are in range [1-255] anyway)
 	private static final byte ID_EMPTY = (byte) 0;
 
+	/**
+	 * Creates a new {@code MagicaVoxelTile}.
+	 *
+	 * @param limits Limits of this tile (must be contained in world limits)
+	 * @param voxFile Destination file (will be overwritten by the save)
+	 */
 	public MagicaVoxelTile(WorldBBox3d limits, File voxFile) {
 		super(limits);
 		this.voxFile = voxFile;
@@ -59,6 +73,8 @@ public class MagicaVoxelTile extends VoxelTile {
 	public void save() throws MapWriteException {
 		if (voxFile == null)
 			return;
+
+		// Correctly handle empty model
 		if (nVoxels == 0) {
 			minX = 0;
 			minY = 0;
@@ -69,14 +85,15 @@ public class MagicaVoxelTile extends VoxelTile {
 		}
 
 		try (OutputStream stream = new BufferedOutputStream(new FileOutputStream(voxFile))) {
-			write(stream, "VOX ");
+			write(stream, "VOX "); // Magic bytes
 			write(stream, 150); // Version
 
-			int chunkHeaderSize = 4 * 3;
-			int sizeChunkSize = 4 * 3;
-			int xyziChunkSize = 4 + 4 * nVoxels;
-			int rgbaChunkSize = 4 * 256;
+			int chunkHeaderSize = Byte.BYTES * 4 + Integer.BYTES * 2; // 4 ASCII characters (chunk ID) + 2 integers (content size and children size)
+			int sizeChunkSize = Integer.BYTES * 3; // 3 integers (X, Y and Z values)
+			int xyziChunkSize = Integer.BYTES + Integer.BYTES * nVoxels; // 1 integer (number of voxels) + N integers (1 per voxel, each packing X, Y, Z and color index 8-bit values)
+			int rgbaChunkSize = Integer.BYTES * palette.size(); // N integers (1 per palette color, each packing red, green, blue and alpha 8-bit values)
 
+			// Main chunk (root)
 			write(stream, "MAIN");
 			write(stream, 0); // Content size
 			write(stream, 3 * chunkHeaderSize + sizeChunkSize + xyziChunkSize + rgbaChunkSize); // Children size
@@ -141,7 +158,7 @@ public class MagicaVoxelTile extends VoxelTile {
 				nVoxels--;
 				data[i] = ID_EMPTY;
 			}
-			return;
+			return; // No need to update heightmaps when "placing" an empty voxel (i.e. removing a voxel)
 		}
 
 		if (wasEmpty)
@@ -208,6 +225,10 @@ public class MagicaVoxelTile extends VoxelTile {
 
 		public int[] data() {
 			return id2rgba;
+		}
+
+		public int size() {
+			return id2rgba.length;
 		}
 	}
 }

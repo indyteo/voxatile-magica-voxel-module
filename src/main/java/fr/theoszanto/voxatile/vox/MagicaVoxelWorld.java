@@ -14,14 +14,28 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Implementation of {@link VoxelWorld} that create a MagicaVoxel
+ * model. The model uses the .vox version 150 file format.
+ * This format does not support tiling. {@link #tiles(int)}
+ * will always return a single tile covering the whole area.
+ */
 public class MagicaVoxelWorld extends VoxelWorld {
 	private final File destination;
 
+	// Not exactly hard limits, but each model coordinates is encoded as a single
+	// byte and currently only a single model is included in the generated file.
 	private static final WorldBBox3d MAX_LIMIT = new WorldBBox3d(
 			new WorldCoords3d(Byte.MIN_VALUE, Byte.MIN_VALUE, Byte.MIN_VALUE),
 			new WorldCoords3d(Byte.MAX_VALUE, Byte.MAX_VALUE, Byte.MAX_VALUE)
 	);
 
+	/**
+	 * Constructs a new {@code MagicaVoxelWorld}.
+	 * The limits of the world have to be set using {@link #setLimits(WorldBBox3d)}
+	 *
+	 * @param destination Directory where to save .vox file to. If null nothing is saved.
+	 */
 	public MagicaVoxelWorld(File destination) {
 		super(new VoxelWorldMetadata());
 		this.destination = destination;

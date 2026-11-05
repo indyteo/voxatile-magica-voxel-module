@@ -9,12 +9,18 @@ import fr.ign.voxatile.core.utils.random.Seed;
 
 import java.beans.ConstructorProperties;
 
+/**
+ * Parameters for {@link MagicaVoxel}.
+ */
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
 @JsonSubTypes({
 		@JsonSubTypes.Type(MagicaVoxelParams.PackedMagicaVoxelParams.class),
 		@JsonSubTypes.Type(MagicaVoxelParams.SplitMagicaVoxelParams.class),
 })
 public abstract class MagicaVoxelParams extends PlaceableParams {
+	/**
+	 * {@return RGBA int-packed color}
+	 */
 	protected abstract int rgba();
 
 	@Override
@@ -22,7 +28,12 @@ public abstract class MagicaVoxelParams extends PlaceableParams {
 		return new MagicaVoxel(rgba());
 	}
 
-	public static MagicaVoxelParams fromHex(String hex) {
+	/**
+	 * Creates a params instance from the hex voxel short form.
+	 * @param hex hexadecimal color string
+	 * @return created params instance
+	 */
+	public static MagicaVoxelParams fromHexCode(String hex) {
 		if (hex.equalsIgnoreCase("empty"))
 			return new PackedMagicaVoxelParams(0);
 		if (!hex.startsWith("#"))
@@ -37,10 +48,20 @@ public abstract class MagicaVoxelParams extends PlaceableParams {
 		}, 16));
 	}
 
+	/**
+	 * Int-packed params alternative.
+	 */
 	public static class PackedMagicaVoxelParams extends MagicaVoxelParams {
+		/**
+		 * Color encoded into an integer with 8 bits for each channel (required).
+		 */
 		@JsonSetter(nulls = Nulls.FAIL)
 		public int rgba;
 
+		/**
+		 * Creates a new {@code PackedMagicaVoxelParams}.
+		 * @param rgba RGBA color
+		 */
 		@ConstructorProperties("rgba")
 		public PackedMagicaVoxelParams(int rgba) {
 			this.rgba = rgba;
@@ -52,16 +73,31 @@ public abstract class MagicaVoxelParams extends PlaceableParams {
 		}
 	}
 
+	/**
+	 * Split channels params alternative.
+	 */
 	public static class SplitMagicaVoxelParams extends MagicaVoxelParams {
+		/**
+		 * Red channel value as an 8-bit integer (optional).
+		 */
 		@JsonSetter(nulls = Nulls.SKIP)
 		public int r = 0;
 
+		/**
+		 * Green channel value as an 8-bit integer (optional).
+		 */
 		@JsonSetter(nulls = Nulls.SKIP)
 		public int g = 0;
 
+		/**
+		 * Blue channel value as an 8-bit integer (optional).
+		 */
 		@JsonSetter(nulls = Nulls.SKIP)
 		public int b = 0;
 
+		/**
+		 * Alpha channel value as an 8-bit integer (optional).
+		 */
 		@JsonSetter(nulls = Nulls.SKIP)
 		public int a = 0xFF;
 

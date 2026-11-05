@@ -11,6 +11,6 @@ import fr.ign.voxatile.core.utils.modules.Module;
 public class MagicaVoxelModule extends Module {
 	@Override
 	public void registerParams(ParamsParser parser) {
-		parser.registerFormat("vox", new OutputFormat(MagicaVoxelWorld::new, MagicaVoxelParams.class, MagicaVoxelParams::fromHex));
+		parser.registerFormat("vox", new OutputFormat(MagicaVoxelWorld::new, MagicaVoxelParams.class, MagicaVoxelParams::fromHexCode));
 	}
 }
