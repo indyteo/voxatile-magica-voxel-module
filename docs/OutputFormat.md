@@ -21,7 +21,7 @@ The generated model will be saved as a `.vox` file in the destination directory.
 
 ## Voxel placeable description
 
-Voxels in MagicaVoxel are colors, stored in a 255-colors palette. As a result, no more than 255 different colors can be used in a single generation!
+Voxels in MagicaVoxel are colors, stored in a 255-color palette. As a result, no more than 255 different colors can be used in a single generation!
 
 #### Full format
 
@@ -59,7 +59,7 @@ Numbers in YAML can be written in hexadecimal using `0x` prefix. This is handy t
 
 The Magica voxel short form string is interpreted as a `#`-prefixed hexadecimal color. It must start with a `#`, followed by either 1, 3, 6 or 8 hexadecimal digits.
 
-The color is created depending on the number of digits:
+The color is created depending on the number of hex digits:
 
 | Digits | Short | Full (rgba) |
 |---|---|---|
@@ -70,4 +70,4 @@ The color is created depending on the number of digits:
 
 The special value `empty` stands for `#00000000` and represents an empty (fully transparent) voxel.
 
-Be careful when writing hexadecimal colors in YAML, as the `#` symbol is used for comments. For example, `place: #360` is the same as `place:` (with no value). Write instead `place: "#360"`.
+Be careful when writing hexadecimal colors in YAML, as the `#` symbol is used for comments. For example, `place: #360` is the same as `place:` (with no value, which may produce unexpected results). Write instead `place: "#360"` with quotes (either single or double).
